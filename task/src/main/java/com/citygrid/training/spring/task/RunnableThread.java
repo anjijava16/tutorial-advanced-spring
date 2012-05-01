@@ -3,7 +3,6 @@ package com.citygrid.training.spring.task;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -48,36 +47,29 @@ public class RunnableThread implements Callable<Result> {
 
         System.out.println("Running Thread ID: " + threadId);
 
-        long result = 1;
+        long factorial = 1;
         for (int i = 1; i < value; i++) {
-            result *= i;
+            factorial *= i;
 
-            Thread.sleep((int) (Math.random() * 100));
+            Thread.sleep((int) (Math.random() * 10));
         }
+        
+        Result result = new Result(threadId, value, factorial);
+        
+        System.out.println(result);
 
-        return new Result(threadId, value, result);
+        return result;
     }
 
     public static void main(final String[] args) {
-        ExecutorService threadPool = Executors.newFixedThreadPool(2);
+        ExecutorService threadPool = Executors.newFixedThreadPool(5);
 
         try {
             Collection<Future<Result>> results = new ArrayList<Future<Result>>();
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 20; i++) {
                 results.add(threadPool.submit(new RunnableThread(i, (int) (Math.random() * 64))));
             }
-
-            for (Future<Result> result : results) {
-                try {
-                    System.out.println(result.get().toString());
-                } catch (InterruptedException e) {
-                } catch (ExecutionException ex) {
-                    System.err.println(ex.getMessage());
-                }
-            }
-
-            System.out.println("All Completed!!!");
         } finally {
             threadPool.shutdown();
         }
