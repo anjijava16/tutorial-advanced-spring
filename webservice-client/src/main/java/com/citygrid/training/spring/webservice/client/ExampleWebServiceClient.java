@@ -14,22 +14,22 @@ public class ExampleWebServiceClient {
     public static void main(final String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
         
-        RestTemplate exampleWebServiceRestTemplate = ctx.getBean("exampleWebService", RestTemplate.class);
+        RestTemplate exampleWebService = ctx.getBean("exampleWebService", RestTemplate.class);
         
         try {
             URI uri = new URI("http://localhost:8080/rest/example/names");
             LOGGER.info(uri);
-            LOGGER.info(exampleWebServiceRestTemplate.getForObject(uri, String.class));
+            LOGGER.info(exampleWebService.getForObject(uri, String.class));
             
             uri = new URI("http://localhost:8080/rest/example/id/chris");
             LOGGER.info(uri);
-            LOGGER.info(exampleWebServiceRestTemplate.getForObject(uri, String.class));
+            LOGGER.info(exampleWebService.getForObject(uri, String.class));
             
             uri = new URI("http://localhost:8080/rest/example/add");
             LOGGER.info(uri);
             String request = "{name: {a, b, c, d, e}}";
             LOGGER.info("Request: " + request);
-            LOGGER.info(exampleWebServiceRestTemplate.postForObject(uri, request, String.class));
+            LOGGER.info(exampleWebService.postForObject(uri, request, String.class));
             
         } catch (URISyntaxException e) {
         }
