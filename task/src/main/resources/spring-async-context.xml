@@ -6,9 +6,9 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="com.citygrid.training.spring.task.scheduler"/>
+    <context:component-scan base-package="com.citygrid.training.spring.task.async"/>
 
-    <task:annotation-driven scheduler="scheduler"/>
-    <task:scheduler id="scheduler" pool-size="10"/>
+    <task:annotation-driven executor="executor"/>
+    <task:executor id="executor" pool-size="5"/>
     
 </beans>
