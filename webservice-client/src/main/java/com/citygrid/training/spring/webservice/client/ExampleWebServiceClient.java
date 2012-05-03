@@ -27,12 +27,11 @@ public class ExampleWebServiceClient {
             LOGGER.info(uri);
             LOGGER.info(exampleWebService.getForObject(uri, Employee.class));
 
-            uri = new URI("http://localhost:8080/rest/example/add");
+            uri = new URI("http://localhost:8080/rest/example/employee");
             LOGGER.info(uri);
-            String request = "{name: {a, b, c, d, e}}";
-            LOGGER.info("Request: " + request);
-            LOGGER.info(exampleWebService.postForObject(uri, request, String.class));
-            
+            Employee employee = new Employee(500, "john");
+            LOGGER.info("Request: " + employee);
+            LOGGER.info(exampleWebService.postForObject(uri, employee, String.class));
         } catch (URISyntaxException e) {
         }
     }

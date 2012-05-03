@@ -51,10 +51,10 @@ public class ExampleResource {
     }
 
     @POST
-    @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.TEXT_HTML)
-    @Path("add")
-    public Response addNames(final String names) {        
-        return Response.status(200).entity(names).build();
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("employee")
+    public Employee addEmployee(final Employee employee) {        
+        return employee;
     }
 }
