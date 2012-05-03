@@ -50,7 +50,7 @@ public class Employee {
     public boolean equals(Object obj) {
         boolean result = false;
 
-        if (obj instanceof Employee) {
+        if (obj != null && obj instanceof Employee) {
             Employee other = (Employee) obj;
             result = other.id == this.id && Objects.equal(other.name, this.name);
         }
