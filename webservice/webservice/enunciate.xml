@@ -1,0 +1,15 @@
+<enunciate xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.25.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <api-classes>
+    <include pattern="com.citygrid.training.spring.advanced.webservice.*" />
+  </api-classes>
+  <namespaces>
+    <namespace uri="http://rest-api.citygrid.com/calltrackingservice" id="model" />
+  </namespaces>
+  <webapp mergeWebXML="src/main/webapp/WEB-INF/web.xml" />
+  <modules>
+    <docs docsDir="docs" includeDefaultDownloads="true" includeExampleXml="false" forceExampleJson="true"
+      title="Call Tracking Service API" copyright="David Fu" />
+    <ruby disabled="false" forceEnable="true" />
+    <c disabled="true" />
+  </modules>
+</enunciate>
