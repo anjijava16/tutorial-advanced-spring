@@ -8,6 +8,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.client.RestTemplate;
 
+import com.citygrid.training.spring.advanced.webservice.model.Employee;
+
 public class ExampleWebServiceClient {
     private final static Logger LOGGER = Logger.getLogger(ExampleWebServiceClient.class.getName());
     
@@ -21,10 +23,10 @@ public class ExampleWebServiceClient {
             LOGGER.info(uri);
             LOGGER.info(exampleWebService.getForObject(uri, String.class));
             
-            uri = new URI("http://localhost:8080/rest/example/id/chris");
+            uri = new URI("http://localhost:8080/rest/example/employee/vera");
             LOGGER.info(uri);
-            LOGGER.info(exampleWebService.getForObject(uri, String.class));
-            
+            LOGGER.info(exampleWebService.getForObject(uri, Employee.class));
+
             uri = new URI("http://localhost:8080/rest/example/add");
             LOGGER.info(uri);
             String request = "{name: {a, b, c, d, e}}";

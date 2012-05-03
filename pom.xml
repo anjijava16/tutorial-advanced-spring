@@ -11,6 +11,7 @@
 
   <modules>
     <module>task</module>
+    <module>webservice-common</module>
     <module>webservice</module>
     <module>webservice-client</module>
     <module>data-access</module>

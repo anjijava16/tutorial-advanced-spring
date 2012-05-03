@@ -15,6 +15,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.citygrid.training.spring.advanced.webservice.model.Employee;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 
@@ -40,14 +41,15 @@ public class ExampleResource {
     }
     
     @GET
-    @Produces(MediaType.TEXT_HTML)
-    @Path("id/{name}")
-    public Response getName(@PathParam("name") final String name) {
+    @Produces(MediaType.APPLICATION_XML)
+    @Path("employee/{name}")
+    public Employee getEmployee(@PathParam("name") final String name) {
         Integer id = samples.get(name.toLowerCase());
+        Employee employee = new Employee(id != null? id.intValue() : -1, name);
         
-        return Response.status(200).entity(id != null ? String.valueOf(id) : "Not Found").build();
+        return employee;
     }
-    
+
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_HTML)
@@ -55,5 +57,4 @@ public class ExampleResource {
     public Response addNames(final String names) {        
         return Response.status(200).entity(names).build();
     }
-    
 }
