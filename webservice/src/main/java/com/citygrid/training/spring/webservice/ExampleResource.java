@@ -43,18 +43,18 @@ public class ExampleResource {
     @GET
     @Produces(MediaType.APPLICATION_XML)
     @Path("employee/{name}")
-    public Employee getEmployee(@PathParam("name") final String name) {
+    public Response getEmployee(@PathParam("name") final String name) {
         Integer id = samples.get(name.toLowerCase());
         Employee employee = new Employee(id != null? id.intValue() : -1, name);
         
-        return employee;
+        return Response.status(200).entity(employee).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_XML)
     @Produces(MediaType.APPLICATION_XML)
     @Path("employee")
-    public Employee addEmployee(final Employee employee) {        
-        return employee;
+    public Response addEmployee(final Employee employee) {        
+        return Response.status(200).entity(employee).build();
     }
 }
