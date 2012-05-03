@@ -42,6 +42,11 @@ public class Employee {
     }
     
     @Override
+    public int hashCode() {
+        return this.id;
+    }
+    
+    @Override
     public boolean equals(Object obj) {
         boolean result = false;
         
