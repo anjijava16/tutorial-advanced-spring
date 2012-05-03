@@ -23,38 +23,44 @@ import com.google.common.collect.ImmutableSet;
 
 @Component
 @Scope(BeanDefinition.SCOPE_SINGLETON)
-@Path("/example")
-public class ExampleResource {
+@Path("/employee")
+public class EmployeeResource {
     private Map<String, Integer> samples;
-    
-    public ExampleResource() {
-        samples = ImmutableMap.of("chris", 100, "jesse", 384, "tommy", 3479874, "vera", 8374, "joey", 15834);
+
+    public EmployeeResource() {
+        samples = ImmutableMap.of("chris", 100, "jesse", 384, "tommy", 3479874, "vera", 8374,
+                "joey", 15834);
     }
-    
+
     @GET
     @Produces(MediaType.TEXT_HTML)
-    @Path("names")
+    @Path("/names")
     public Response getNames() {
         ImmutableSet<String> result = ImmutableSet.copyOf(samples.keySet());
-        
+
         return Response.status(200).entity(result.toString()).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_XML)
-    @Path("employee/{name}")
+    @Path("/{name}")
     public Response getEmployee(@PathParam("name") final String name) {
-        Integer id = samples.get(name.toLowerCase());
-        Employee employee = new Employee(id != null? id.intValue() : -1, name);
+        Response response = Response.status(404).build();
         
-        return Response.status(200).entity(employee).build();
+        Integer id = samples.get(name.toLowerCase());
+
+        if (id != null) {
+            response = Response.status(200).entity(new Employee(id, name)).build();
+        }
+
+        return response;
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_XML)
-    @Produces(MediaType.APPLICATION_XML)
-    @Path("employee")
-    public Response addEmployee(final Employee employee) {        
+    @Consumes("application/xml,application/json")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/")
+    public Response addEmployee(final Employee employee) {
         return Response.status(200).entity(employee).build();
     }
 }
