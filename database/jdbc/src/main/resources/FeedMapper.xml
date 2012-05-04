@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.citygrid.training.spring.advanced.mybatis.FeedDao">
+  <cache />
+
+  <resultMap id="feedResultMap" type="Feed">
+    <id property="feed_Id" column="feed_id" />
+    <result property="feed_code" column="feed_code" />
+    <result property="feed_name" column="feed_name" />
+    <result property="priority" column="priority" />
+    <result property="active" column="active" />
+  </resultMap>
+
+  <select id="findAll" resultMap="feedResultMap">
+    select feed_id, feed_code, feed_name, priority, active FROM feed
+  </select>
+</mapper>
