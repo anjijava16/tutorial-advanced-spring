@@ -17,13 +17,14 @@ public class EmployeeWebServiceClient {
     public static void main(final String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("application-context.xml");
 
-        RestTemplate employeeWebService = ctx.getBean("employeeWebService", RestTemplate.class);
+        RestTemplate employeeXmlWebService = ctx.getBean("employeeXmlWebService", RestTemplate.class);
+        RestTemplate employeeJsonWebService = ctx.getBean("employeeJsonWebService", RestTemplate.class);
 
         try {
             try {
                 URI uri = new URI("http://localhost:8080/rest/employee/names");
                 LOGGER.info(uri);
-                LOGGER.info(employeeWebService.getForObject(uri, String.class));
+                LOGGER.info(employeeXmlWebService.getForObject(uri, String.class));
             } catch (RestClientException ex) {
                 LOGGER.warn(ex.getMessage());
             }
@@ -31,15 +32,15 @@ public class EmployeeWebServiceClient {
             try {
                 URI uri = new URI("http://localhost:8080/rest/employee/vera");
                 LOGGER.info(uri);
-                LOGGER.info(employeeWebService.getForObject(uri, Employee.class));
+                LOGGER.info(employeeXmlWebService.getForObject(uri, String.class));
             } catch (RestClientException ex) {
                 LOGGER.warn(ex.getMessage());
             }
 
             try {
-                URI uri = new URI("http://localhost:8080/rest/employee/johnny");
+                URI uri = new URI("http://localhost:8080/rest/employee/vera");
                 LOGGER.info(uri);
-                LOGGER.info(employeeWebService.getForObject(uri, Employee.class));
+                LOGGER.info(employeeJsonWebService.getForObject(uri, String.class));
             } catch (RestClientException ex) {
                 LOGGER.warn(ex.getMessage());
             }
@@ -49,7 +50,7 @@ public class EmployeeWebServiceClient {
                 LOGGER.info(uri);
                 Employee employee = new Employee(500, "john");
                 LOGGER.info("Request: " + employee);
-                LOGGER.info(employeeWebService.postForObject(uri, employee, String.class));
+                LOGGER.info(employeeJsonWebService.postForObject(uri, employee, Employee.class));
             } catch (RestClientException ex) {
                 LOGGER.warn(ex.getMessage());
             }

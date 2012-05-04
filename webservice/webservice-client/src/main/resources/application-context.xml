@@ -13,7 +13,7 @@
         <oxm:class-to-be-bound name="com.citygrid.training.spring.advanced.webservice.model.Employee"/>
     </oxm:jaxb2-marshaller>
     
-    <bean id="employeeWebService" class="org.springframework.web.client.RestTemplate">
+    <bean id="employeeXmlWebService" class="org.springframework.web.client.RestTemplate">
         <property name="messageConverters">
             <list>
                 <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
@@ -22,6 +22,14 @@
                 </bean>
                 <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter"/>
+            </list>            
+        </property> 
+    </bean>    
+
+    <bean id="employeeJsonWebService" class="org.springframework.web.client.RestTemplate">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
                 <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
             </list>            
         </property> 

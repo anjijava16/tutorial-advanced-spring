@@ -8,6 +8,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.citygrid.training.spring.advanced.webservice.model.Employee;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import com.sun.jersey.api.json.JSONWithPadding;
 
 /** To run the example, "mvn clean package -Djetty" **/
 
@@ -42,7 +45,8 @@ public class EmployeeResource {
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_XML)
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{name}")
     public Response getEmployee(@PathParam("name") final String name) {
         Response response = Response.status(404).build();
@@ -56,8 +60,24 @@ public class EmployeeResource {
         return response;
     }
 
+    @GET
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
+    @Path("jsonp/{name}")
+    public JSONWithPadding getEmployee(@PathParam("name") final String name, @QueryParam("jsoncallback") String callback) {
+        Employee employee = null;
+        
+        Integer id = samples.get(name.toLowerCase());
+
+        if (id != null) {
+            employee = new Employee(id, name);
+        }
+
+        return new JSONWithPadding(new GenericEntity<Employee>(employee) {}, callback);
+    }
+
     @POST
-    @Consumes("application/xml,application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/")
     public Response addEmployee(final Employee employee) {
