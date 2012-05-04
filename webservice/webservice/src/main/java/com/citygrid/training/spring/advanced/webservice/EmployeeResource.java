@@ -64,7 +64,7 @@ public class EmployeeResource {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
     @Path("jsonp/{name}")
-    public JSONWithPadding getEmployee(@PathParam("name") final String name, @QueryParam("jsoncallback") String callback) {
+    public Response getEmployee(@PathParam("name") final String name, @QueryParam("jsoncallback") String callback) {
         Employee employee = null;
         
         Integer id = samples.get(name.toLowerCase());
@@ -73,7 +73,7 @@ public class EmployeeResource {
             employee = new Employee(id, name);
         }
 
-        return new JSONWithPadding(new GenericEntity<Employee>(employee) {}, callback);
+        return Response.status(202).entity(new JSONWithPadding(new GenericEntity<Employee>(employee) {}, callback)).build();
     }
 
     @POST
