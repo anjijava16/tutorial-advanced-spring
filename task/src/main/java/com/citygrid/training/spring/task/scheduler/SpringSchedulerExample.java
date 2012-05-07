@@ -7,7 +7,7 @@ public class SpringSchedulerExample {
         new ClassPathXmlApplicationContext("spring-scheduler-context.xml");
         
         while (true) {
-            
+            Thread.yield();
         }
     }
 }

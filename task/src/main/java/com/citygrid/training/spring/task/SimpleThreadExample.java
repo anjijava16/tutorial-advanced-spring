@@ -20,6 +20,8 @@ public class SimpleThreadExample extends Thread {
             if (value != null) {
                 LOGGER.info("Value: " + value);
             }
+            
+            Thread.yield();
         }
     }
 }

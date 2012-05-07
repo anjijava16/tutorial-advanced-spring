@@ -18,6 +18,7 @@ public class IntegerGenerator implements Runnable {
                 blockingQueue.put((int) (Math.random() * 1000) + minValue);
                 
                 Thread.sleep((int) (Math.random() * 1000));
+                Thread.yield();
             } catch (InterruptedException ex) {
                 break;
             }

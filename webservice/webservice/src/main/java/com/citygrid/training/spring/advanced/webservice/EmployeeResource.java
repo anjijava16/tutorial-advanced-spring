@@ -45,35 +45,19 @@ public class EmployeeResource {
     }
 
     @GET
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
     @Path("/{name}")
-    public Response getEmployee(@PathParam("name") final String name) {
+    public Response getEmployee(@PathParam("name") final String name, @QueryParam("jsoncallback") String callback) {
         Response response = Response.status(404).build();
         
         Integer id = samples.get(name.toLowerCase());
 
         if (id != null) {
-            response = Response.status(200).entity(new Employee(id, name)).build();
+            response = Response.status(200).entity(new JSONWithPadding(new GenericEntity<Employee>(new Employee(id, name)) {}, callback)).build();
         }
 
         return response;
-    }
-
-    @GET
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON, "application/x-javascript"})
-    @Path("jsonp/{name}")
-    public Response getEmployee(@PathParam("name") final String name, @QueryParam("jsoncallback") String callback) {
-        Employee employee = null;
-        
-        Integer id = samples.get(name.toLowerCase());
-
-        if (id != null) {
-            employee = new Employee(id, name);
-        }
-
-        return Response.status(202).entity(new JSONWithPadding(new GenericEntity<Employee>(employee) {}, callback)).build();
     }
 
     @POST

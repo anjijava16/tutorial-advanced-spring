@@ -29,6 +29,7 @@ public class SpringThreadPoolExample {
             
             try {
                 Thread.sleep((int) (Math.random() * 100));
+                Thread.yield();
             } catch (InterruptedException e) {
                 break;
             }
