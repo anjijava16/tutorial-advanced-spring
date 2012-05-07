@@ -20,7 +20,7 @@ public class JavaSchedulerExample {
         BlockingQueue<Integer> integerChannel = ctx.getBean("integerChannel", BlockingQueue.class);
 
         scheduler.scheduleAtFixedRate(
-                ctx.getBean("singleIntegerGenerator", SingleIntegerGenerator.class), 0,
+                ctx.getBean("integerGenerator", SingleIntegerGenerator.class), 0,
                 (int) (Math.random() * 1000), TimeUnit.MILLISECONDS);
 
         while (true) {
@@ -28,6 +28,8 @@ public class JavaSchedulerExample {
             if (value != null) {
                 LOGGER.info("value: " + value);
             }
+            
+            Thread.yield();
         }
     }
 }
